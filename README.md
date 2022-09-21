@@ -20,6 +20,8 @@
   
 <br>
 
+## 3. 크롤링 지표 및 지수 계산 
+[측정결과(0901).csv](https://github.com/mini1115/beach/files/9618264/info.csv)
 
 
 <br>

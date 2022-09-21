@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>해수욕 하기 좋은데이</title>
+        <!-- Favicon-->
+        <link rel="shortcut icon" href="{% static 'images/favicon (1).ico' %}">
+                <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{% static 'css/styles.css'%}" rel="stylesheet" />
+    </head>
+    <body>
+        <!-- Responsive navbar-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container px-5">
+                <a class="navbar-brand" href="/">HOME</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <!-- <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li> -->
+                        <li class="nav-item"><a class="nav-link" href="/list">공지사항</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/write_form">공지작성</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/tour">관광지</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+  <br>
+
+  <!--기본 템플릿 안에 삽입될 내용 start-->
+  {% block content %}
+  {% endblock %}
+
+  <!--자바스크립트  start-->
+  {% block script %}
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+  {% endblock %}
+
+
+       <!-- Footer-->
+       <footer class="py-5 bg-dark">
+        <div class="container px-4 px-lg-5"><p class="m-0 text-center text-white">Copyright &copy; Website 2022</p></div>
+    </footer>
+   
+</body>
+</html>

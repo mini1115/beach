@@ -1,0 +1,83 @@
+{% extends 'base.html'%}
+{%load static %}
+{% block content %}
+
+<div class="container">
+  <br/><br/>
+  <h2>공지사항</h2>
+  
+  <table class="table table-dark">
+    <thead>
+      <tr>
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>  
+        <th>첨부파일</th>
+        <th>작성일</th>
+        <th>조회수</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for board in boardList %}
+      <tr>
+        <td>{{board.id}}</td>
+        <td>{{board.title}}</td>
+        <td>{{board.writer}}</td>
+        <td>
+          <!-- file 존재여부 확인 -->
+          {% if board.filesize > 0 %}
+          <span class="_imgs" data-url="/download_count?id={{board.id}}">
+            <img src="{%static 'images/a3.png' %}"/></span>
+          {%  endif %}
+        </td>
+        <td>{{board.post_date}}</td>
+        <td>{{board.hit}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="container">
+    <ul class="pagination" >
+  <!-- 이전 -->
+      {% if startPage > blockPage %}
+        <li class="page-items" ><a class = "page-link" href="?page={{startPage|add:-3}}" >이전</a></li>
+      {% endif %}
+  <!-- 페이지번호 -->
+      {% for i in range %}
+        {% if i == currentPage %}
+         <li class="page-item active"><a class="page-link" href="">{{i}}</a></li>
+        {% else %}
+          <li class="page-item "><a class = "page-link" href="?page={{i}}">{{i}}</a></li>
+        {% endif %}
+      {% endfor %}
+  <!-- 다음 -->
+      {% if endPage < totPage %} 
+        <li class="page-item"><a class = "page-link" href="?page={{endPage|add:1}}">다음</a></li>
+      {% endif %}
+</ul>
+</div>
+</div>
+{% endblock %}
+
+
+{% block script %}
+
+ <!-- download script  -->
+ <script>
+  $("._imgs ").on("click",function(){
+    _imgs = $(this)
+    $.ajax({
+      // $(this).data('url')
+      url : $(this).attr('data-url'),
+      type: 'GET',
+      success : function(data){
+        //alert(data.count)
+        _imgs.parent().parent().find(".downCnt").text(data.count)
+        location.href="/download?id=" + data.id
+      }
+    })
+  
+  })
+
+</script>
+{% endblock %}

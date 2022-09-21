@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- Page Content-->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">  
+</head>
+<div class="container px-4 px-lg-5">
+<!-- 지도 표시할 div 입니다 -->
+<div class="row gx-4 gx-lg-5 align-items-center my-5">
+  <div class="col-lg-7">
+  <!-- 지도 -->
+    <div id="map" style="width: 600px; height: 300px;" ></div></div>
+    <div class="col-lg-5">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>명소</th>
+            <th>설명</th>
+            <th>위치</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr onclick="loc1()">
+            <td>청사포</td>
+            <td>* 일출이 아름다운 포구, 청사포 *</td>
+            <td>부산 해운대구 중동 산 3-9</td>
+          </tr>
+          <tr onclick="loc2()">
+            <td>수영강</td>
+            <td>야간경관 조성으로 아름다운 수영강변을 즐기실 수 있습니다.</td>
+            <td>부산 해운대구 우동 1301-10</td>
+          </tr>
+          <tr onclick="loc3()">
+            <td>영화의 전당</td>
+            <td>다양한 극장을 보유하고 있는 부산의 랜드마크이다.</td>
+            <td>부산 해운대구 우동 1467</td>
+          </tr>
+          <tr onclick="loc4()">
+            <td>누리마루 APEC하우스</td>
+            <td>울창한 동백나무와 송림으로 둘러싸인 자연경관이 아름다운 동백섬에 위치한다.</td>
+            <td>부산 해운대구 우동 714-1</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+</div>
+<div class="container px-4 px-lg-5">
+  <div class="mb-5">
+    <div id="roadview" style="width:100%;height:300px;">
+      아아아ㅏ
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript"
+src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6fa928439db918e52edfb39bd62d69f5&libraries=services,clusterer,drawing"></script>
+<script>
+    var mapContainer  = document.getElementById('map');
+    mapOption  = {
+      /*Lat: 35.1560 Lon: 129.1607*/
+      center : new kakao.maps.LatLng(35.163063065731684,129.16359598856434),
+      level : 7
+    };
+  
+    // 마커가 표시될 위치입니다 Lat: 35.1564 Lon: 129.1582
+    var map = new kakao.maps.Map(mapContainer,  mapOption); 
+
+    var positions = [
+    {
+        title: '영화의 전당', 
+        latlng: new kakao.maps.LatLng(35.17101419306042, 129.12700666821945)
+    },
+    {
+        title: '누리마루 APEC하우스', 
+        latlng: new kakao.maps.LatLng(35.15232752784393, 129.15131697364436)
+    },
+    {
+        title: '청사포다릿돌전망대 ', 
+        latlng: new kakao.maps.LatLng(35.16422584567294, 129.19631496043792)
+    },
+    {
+        title: '수영강',
+        latlng: new kakao.maps.LatLng(35.168798743338044, 129.1254915560576)
+    }
+];
+var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+    
+for (var i = 0; i < positions.length; i ++) {
+    
+    // 마커 이미지 크기
+    var imageSize = new kakao.maps.Size(24, 35); 
+    
+    // 마커 이미지를 생성    
+    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+    
+    // 마커를 생성
+    var marker = new kakao.maps.Marker({
+        map: map, // 마커 표시
+        position: positions[i].latlng, // 마커위치
+        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+        image : markerImage // 마커 이미지 
+    });
+}
+
+//로드뷰 이미지
+
+var roadviewContainer = document.getElementById('roadview'); //로드뷰를 표시할 div
+var roadview = new kakao.maps.Roadview(roadviewContainer); //로드뷰 객체
+var roadviewClient = new kakao.maps.RoadviewClient(); //좌표로부터 로드뷰 파노ID를 가져올 로드뷰 helper객체
+
+var position = new kakao.maps.LatLng(35.1587,129.1604);
+  
+roadviewClient.getNearestPanoId(position, 50, function(panoId) {
+  roadview.setPanoId(panoId, position);
+  });
+
+// 특정 위치의 좌표와 가까운 로드뷰의 panoId를 추출하여 로드뷰를 띄운다.
+function loc1(){
+  var position = new kakao.maps.LatLng(35.1631770843564, 129.19531231257295);
+  alert("청사포다릿돌전망대")
+  roadviewClient.getNearestPanoId(position, 50, function(panoId) {
+    roadview.setPanoId(panoId, position); //panoId와 중심좌표를 통해 로드뷰 실행
+});
+}
+function loc2(){
+  var position = new kakao.maps.LatLng(35.171,129.1229);
+  alert("수영강")
+  roadviewClient.getNearestPanoId(position, 50, function(panoId) {
+    roadview.setPanoId(panoId, position); //panoId와 중심좌표를 통해 로드뷰 실행
+});
+}
+
+function loc3(){
+  var position = new kakao.maps.LatLng(35.17029223345757,129.12768144974427);
+  alert("영화의 전당")
+  roadviewClient.getNearestPanoId(position, 50, function(panoId) {
+    roadview.setPanoId(panoId, position); //panoId와 중심좌표를 통해 로드뷰 실행
+});
+}
+function loc4(){
+  var position = new kakao.maps.LatLng(35.15232752784393, 129.15131697364436);
+  alert("누리마루 APEC")
+  roadviewClient.getNearestPanoId(position, 50, function(panoId) {
+    roadview.setPanoId(panoId, position); //panoId와 중심좌표를 통해 로드뷰 실행
+});
+}
+
+</script>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- content -->
+<div class="container px-4 px-lg-5">
+  <!-- Heading Row-->
+  <div class="row gx-4 gx-lg-5 align-items-center my-5">
+  <h2 style='margin-bottom : 50px; text-align: center; text-shadow: 1ch;'>오늘의 상세 지수  </h2>
+    <table style="margin-top: 50px;" class="table table-bordered">
+      <thead>
+        <tr style="text-align: center ;">
+          <th>강수량</th>
+          <th>파고</th>
+          <th>풍속</th>
+          <th>수온</th>
+          <th>기온</th>
+
+
+        </tr>
+      </thead>
+      <tbody>
+        {% for value in data %}
+          <tr style="text-align: center ;" >
+            <td>{{value.rainfall}}</td>
+            <td>{{value.digging}}</td>
+            <td>{{value.wind}}</td>
+            <td>{{value.water_temp}}</td>
+            <td>{{value.temp}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}

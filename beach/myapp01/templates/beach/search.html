@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %} 
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 align-items-center my-5">
+      <div class="container px-4 px-lg-5">
+        <!-- Heading Row-->
+        <div class="row gx-4 gx-lg-5 align-items-center my-5">
+            <!-- <h4 class="font-weight-light" style = 'text-align: center;'>해운대 해수욕장 해수욕 지수</h4> -->
+            <div class="col-lg-7">
+
+            <!-- 지도 -->
+              <div style="text-align: center;">
+                <form onsubmit="false">
+                  <p><input type="date" id ='input_date'  max="2022-09-06" ></p>
+                  <p><input type="submit" value="지수 검색" onclick="input()" ></p>
+                </form>
+              </div>
+            </div>
+              <div class="col-lg-5" style = 'text-align: left;'>
+              <p>
+                <img src="{% get_static_prefix  %}images/{{img}}" width="300" height="220">
+              </p>
+            </div>
+    
+      </div>
+    </div>
+    <div class="row gx-4 gx-lg-5 align-items-center my-5">
+        <table class="table table-bordered">
+          <thead>
+            <tr style="text-align: center ;">
+              <th>강수량</th>
+              <th>파고</th>
+              <th>풍속</th>
+              <th>수온</th>
+              <th>기온</th>
+    
+    
+            </tr>
+          </thead>
+          <tbody>
+            {% for value in datas %}
+              <tr style="text-align: center ;" >
+                <td>{{value.rainfall}}</td>
+                <td>{{value.digging}}</td>
+                <td>{{value.wind}}</td>
+                <td>{{value.water_temp}}</td>
+                <td>{{value.temp}}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+</div>
+
+{% endblock %}
+{% block script %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+<script>
+  function input(){
+    var date = $('#input_date').val()
+    alert('클릭 이벤트 처리')
+    $.ajax({
+      url:'test/',
+      type : 'POST',
+      dataType:'json',
+      data:{'date': date},
+      success:function(data){
+        $('#datas').append(json.datas);
+        alert("성공")
+
+      },
+      error : function(){
+        alert("실패");
+      }
+    });
+    
+  }
+</script>
+{% endblock %}
